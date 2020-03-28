@@ -1,1 +1,5 @@
 .env
+lutscher/jackett_config/*
+lutscher/radarr_config/*
+lutscher/sonarr_config/*
+lutscher/transmission_config/*

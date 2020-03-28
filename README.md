@@ -8,9 +8,19 @@ of the `env` is also provided.
 To create a container `cd` next to its `docker-compose.yml` and run `sudo docker-compose up -d` 
 To update a running container to exactly the same as above. Once the new container runs, prune dangling images with: `sudo docker image prune` 
 
+## Lutscher
+A combination of sonarr, radarr, transmission and jacket.
+- https://sonarr.tv/
+- https://hub.docker.com/r/linuxserver/sonarr/
+- https://radarr.video/
+- https://hub.docker.com/r/linuxserver/radarr/
+- https://transmissionbt.com/
+- https://hub.docker.com/r/linuxserver/transmission/
+- https://github.com/Jackett/Jackett
+- https://hub.docker.com/r/linuxserver/jackett/
+
 ## Portainer
 Gui tool to organize docker container. See https://www.portainer.io/
-
 
 ## plex
 Video organisation platform. See https://www.plex.tv/ and

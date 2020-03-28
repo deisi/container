@@ -1,0 +1,16 @@
+#Common Variables
+PUID=1000
+PGID=1000
+TZ=Europe/Berlin
+TV=/path/to/series
+MOVIES=/path/to/movies
+DOWNLOADS=/path/to/downloads
+# Cant use USER here as it gets overwritten
+
+SONARR_CONFIG=./sonarr_config
+JACKETT_CONFIG=./jackett_config
+TRANSMISSION_CONFIG=./transmission_config
+TRANSMISSION_WATCH=/path/tp/watch/folder
+TRANSMISSION_PASS=transmissionpassword
+TRANSMISSION_USER=transmissionuser
+RADARR_CONFIG=./radarr_config
