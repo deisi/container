@@ -8,6 +8,9 @@ of the `env` is also provided.
 To create a container `cd` next to its `docker-compose.yml` and run `sudo docker-compose up -d` 
 To update a running container to exactly the same as above. Once the new container runs, prune dangling images with: `sudo docker image prune` 
 
+## Portainer
+Gui tool to organize docker container. See https://www.portainer.io/
+
 
 ## plex
 Video organisation platform. See https://www.plex.tv/ and
