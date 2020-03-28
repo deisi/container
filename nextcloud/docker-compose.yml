@@ -1,0 +1,98 @@
+version: '2'
+
+volumes:
+  nextcloud:
+  redis_data:
+  config:
+  apps:
+  database:
+
+networks:
+  nextcloud:
+    external:
+      name: nextcloud
+  proxy-network:
+    external:
+      name: proxy-network
+
+services:
+  nextcloud:
+    image: nextcloud:${NEXTCLOUD_VERSION}
+    container_name: nextcloud_nextcloud_1 
+    volumes:
+      - nextcloud:/var/www/html
+      - config:/var/www/html/config
+      - $CONFIG_PHP:/var/www/config/config.php
+      - apps:/var/www/html/custom_apps
+      - $DATA:/var/www/html/data
+    environment:
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_HOST: ${MYSQL_HOST}
+      NEXTCLOUD_TABLE_PREFIX: ${NEXTCLOUD_TABLE_PREFIX} 
+      NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USER}
+      NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
+    restart: unless-stopped
+    networks:
+      - nextcloud
+      - proxy-network
+
+  cron:
+    image: nextcloud:17
+    container_name: nextcloud-cron
+    volumes:
+      - nextcloud:/var/www/html
+      - config:/var/www/html/config
+      - apps:/var/www/html/custom_apps
+      - /data/owncloud/data:/var/www/html/data
+    user: www-data
+    entrypoint: |
+      bash -c 'bash -s <<EOF
+        trap "break;exit" SIGHUP SIGINT SIGTERM
+        while [ ! -f /var/www/html/config/config.php ]; do
+          sleep 1
+        done
+        while true; do
+          php -f /var/www/html/cron.php
+          sleep 15m
+        done
+      EOF'
+    restart: unless-stopped
+    networks:
+      - nextcloud
+
+  db:
+    image: mariadb
+    container_name: nextcloud-mariadb
+    volumes:
+      - database:/var/lib/mysql
+      - $MARIADB_CONF:/etc/mysql/conf.d
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+    restart: unless-stopped
+    networks:
+      - nextcloud
+
+  # If using Redis
+  redis:
+    image: redis:alpine
+    container_name: redis
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - nextcloud
+
+# Add this if resis should be used.
+#'memcache.distributed' => '\OC\Memcache\Redis',
+#'memcache.locking' => '\OC\Memcache\Redis',
+#'memcache.local' => '\OC\Memcache\APCu',
+#'redis' => array(
+#   'host' => 'redis',
+#   'port' => 6379,
+#   ),

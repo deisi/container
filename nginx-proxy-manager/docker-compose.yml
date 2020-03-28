@@ -1,0 +1,19 @@
+version: '3'
+
+# everything that sould be proxies by this must be part of the reverse proxy network
+networks:
+  proxy-network:
+    external:
+      name: proxy-network
+
+services:
+  nginx-proxy-manager:
+    image: jlesage/nginx-proxy-manager
+    container_name: nginx
+    ports:
+      - "80:8080"
+      - "443:4443"
+    volumes:
+      - "$CONFIG:/config:rw"
+    networks:
+      - proxy-network

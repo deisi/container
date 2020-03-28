@@ -1,5 +1,13 @@
 .env
+
 lutscher/jackett_config/*
 lutscher/radarr_config/*
 lutscher/sonarr_config/*
 lutscher/transmission_config/*
+
+nextcloud/config.php
+nextcloud/mariadb_conf.d/*
+
+jitsi-meet/jitsi-meet_config/*
+
+nginx-proxy-manager/config/*
