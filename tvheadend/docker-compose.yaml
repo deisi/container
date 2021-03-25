@@ -10,7 +10,7 @@ services:
       - TZ=Europe/Berlin
       #- RUN_OPTS=<run options here> #optional
     volumes:
-      - $CONFIG/config
+      - $CONFIG:/config
       - $RECORDINGS:/recordings
     ports:
       - 9981:9981

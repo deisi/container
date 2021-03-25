@@ -13,6 +13,5 @@ services:
       - OCR_ON_SUCCESS_DELETE=1
       - OCR_DESKEW=1
       - PYTHONUNBUFFERED=1
-      - WATCHER_CHMOD=664
     entrypoint: python3
     command: watcher.py
