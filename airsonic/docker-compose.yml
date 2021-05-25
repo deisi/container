@@ -1,0 +1,23 @@
+---
+version: "2.1"
+services:
+  airsonic:
+    image: ghcr.io/linuxserver/airsonic
+    container_name: airsonic
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - CONTEXT_PATH=$url_base #optional
+      - JAVA_OPTS=$java_opts #optional
+    volumes:
+      - $config:/config
+      - $music:/music
+      - $playlists:/playlists
+      - $podcasts:/podcasts
+      - $media:/media
+    ports:
+      - 4040:4040
+    devices:
+      - /dev/snd:/dev/snd
+    restart: unless-stopped
