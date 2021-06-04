@@ -7,15 +7,16 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
-      - CONTEXT_PATH=$url_base #optional
-      - JAVA_OPTS=$java_opts #optional
+      - TZ=Europe/Berlin
+      - JAVA_OPTS=-Dserver.use-forward-headers=true
     volumes:
       - $config:/config
       - $music:/music
       - $playlists:/playlists
       - $podcasts:/podcasts
       - $media:/media
+      - ./sound.properties:/usr/lib/jvm/java-1.8-openjdk/jre/lib/sound.properties
+      - ./sound.properties:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/sound.properties
     ports:
       - 4040:4040
     devices:
