@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  traggo:
+    image: traggo/server:latest
+    restart: always
+    ports:
+      - 3030:3030
+    environment:
+      TRAGGO_DEFAULT_USER_NAME: "admin"
+      TRAGGO_DEFAULT_USER_PASS: "$password"
+    volumes:
+      - ./data:/opt/traggo/data
