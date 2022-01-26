@@ -9,5 +9,10 @@ nextcloud/config.php
 nextcloud/mariadb_conf.d/*
 
 jitsi-meet/jitsi-meet_config/*
+jitsi-meet/*/**
 
 nginx-proxy-manager/config/*
+
+airsonic/**/*
+
+
