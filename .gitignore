@@ -16,5 +16,6 @@ nginx-proxy-manager/config/*
 airsonic/**/*
 
 *.db
+*~
 
 
