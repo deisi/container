@@ -2,23 +2,26 @@
 version: "2.1"
 services:
   airsonic:
+    build: .
     image: ghcr.io/linuxserver/airsonic
-    container_name: airsonic
+    #container_name: airsonic
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Berlin
       - JAVA_OPTS=-Dserver.use-forward-headers=true
+      - HOME=/config
     volumes:
       - $config:/config
       - $music:/music
       - $playlists:/playlists
       - $podcasts:/podcasts
       - $media:/media
-      - ./sound.properties:/usr/lib/jvm/java-1.8-openjdk/jre/lib/sound.properties
-      - ./sound.properties:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/sound.properties
+        #- ./pulse:/root/.config/pulse
+        #- ./sound.properties:/usr/lib/jvm/java-1.8-openjdk/jre/lib/sound.properties
+        #- ./sound.properties:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/sound.properties
     ports:
       - 4040:4040
-    devices:
-      - /dev/snd:/dev/snd
+        #devices:
+        #  - /dev/snd:/dev/snd
     restart: unless-stopped
