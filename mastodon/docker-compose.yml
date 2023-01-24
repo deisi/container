@@ -1,0 +1,63 @@
+---
+version: "2.1"
+services:
+  mastodon:
+    image: lscr.io/linuxserver/mastodon:latest
+    container_name: mastodon
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - LOCAL_DOMAIN=$DOMAIN
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DB_HOST=db
+      - DB_USER=mastodon
+      - DB_NAME=mastodon
+      - DB_PASS=$DB_PASS
+      - DB_PORT=5432
+      - ES_ENABLED=false
+      - SMTP_SERVER=smtp.strato.de
+      - SMTP_LOGIN=$SMTP_LOGIN
+      - SMTP_PASSWORD=$SMTP_PASSWORD
+      - SMTP_PORT=587
+      - SMTP_FROM_ADDRESS=$SMTP_LOGIN
+      - S3_ENABLED=false
+      - OTP_SECRET=$OTP_SECRET
+      - SECRET_KEY_BASE=$SECRET_KEY_BASE
+      - VAPID_PRIVATE_KEY=$VAPID_PRIVATE_KEY
+      - VAPID_PUBLIC_KEY=$VAPID_PUBLIC_KEY
+      - RAILS_ENV=production
+      #- RAILS_LOG_LEVEL=debug
+      #- WEB_DOMAIN=$DOMAIN #optional
+      #- ES_HOST=es #optional
+      #- ES_PORT=9200 #optional
+      #- ES_USER=elastic #optionalLOCAL_DOMAIN
+      #- ES_PASS=elastic #optional
+      #- S3_BUCKET= #optional
+      #- AWS_ACCESS_KEY_ID= #optional
+      #- AWS_SECRET_ACCESS_KEY= #optional
+      #- S3_ALIAS_HOST= #optional
+    volumes:
+      - ./config:/config
+    ports:
+      - 8537:80
+      - 4432:443
+    restart: unless-stopped
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=$DB_PASS
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_DB=$POSTGRES_DB
+  redis:
+    image: redis
+    restart: always
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - cache:/data
+volumes:
+  cache:
+    driver: local
+
