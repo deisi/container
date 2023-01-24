@@ -18,4 +18,6 @@ airsonic/**/*
 *.db
 *~
 
+*/config/*
+
 
